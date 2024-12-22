@@ -52,8 +52,10 @@ const PokemonGrid = ({ pokemonData }) => {
       {/* Navbar */}
       <Navbar onSearch={handleSearch} />
 
-      {/* Filter Section */}
-      <div className="flex justify-end bg-gray-50 py-4 px-6 shadow-md">
+      {/* Filter and Title Section */}
+      <div className="flex justify-between items-center bg-gray-50 py-4 px-6 shadow-md">
+        <h1 className="text-3xl font-extrabold text-gray-800 mx-auto">Pokémon Gallery</h1>
+        {/* Filter Section on the right */}
         <select
           name="filter"
           id="filter"
@@ -106,11 +108,7 @@ const PokemonGrid = ({ pokemonData }) => {
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-6 py-2 rounded-l-lg ${
-            currentPage === 1
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-gray-700 text-white hover:bg-gray-800"
-          }`}
+          className={`px-6 py-2 rounded-l-lg ${currentPage === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-gray-700 text-white hover:bg-gray-800"}`}
         >
           Previous
         </button>
@@ -120,11 +118,7 @@ const PokemonGrid = ({ pokemonData }) => {
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`px-6 py-2 rounded-r-lg ${
-            currentPage === totalPages
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-gray-700 text-white hover:bg-gray-800"
-          }`}
+          className={`px-6 py-2 rounded-r-lg ${currentPage === totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-gray-700 text-white hover:bg-gray-800"}`}
         >
           Next
         </button>
