@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
 
 const PokemonGrid = ({ pokemonData }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
 
+  const handleSearch = (query) => {
+    const filtered = pokemonData.filter((ele) =>
+      ele.name.toLowerCase().includes(query.toLowerCase()) ||
+      (ele.description && ele.description.toLowerCase().includes(query.toLowerCase()))
+    );
+    setFilteredProducts(filtered);
+    setCurrentPage(1); 
+  };
+
   const handleFilteredProducts = (e) => {
     const filterValue = e.target.value;
     const products = filterValue
       ? pokemonData.filter((ele) => ele.type.includes(filterValue))
-      : pokemonData; 
+      : pokemonData;
     setFilteredProducts(products);
     setCurrentPage(1); 
   };
@@ -21,8 +31,7 @@ const PokemonGrid = ({ pokemonData }) => {
   };
 
   const totalPages = Math.ceil(
-    (filteredProducts.length > 0 ? filteredProducts : pokemonData).length /
-      itemsPerPage
+    (filteredProducts.length > 0 ? filteredProducts : pokemonData).length / itemsPerPage
   );
 
   const handlePageChange = (newPage) => {
@@ -31,16 +40,19 @@ const PokemonGrid = ({ pokemonData }) => {
     setCurrentPage(newPage);
   };
 
-  useEffect(() => {
-    console.log(pokemonData); 
-  }, [pokemonData]);
-
   const currentData =
     filteredProducts.length > 0 ? filteredProducts : pokemonData;
 
+  useEffect(() => {
+    console.log(pokemonData); // Log pokemonData for debugging
+  }, [pokemonData]);
+
   return (
     <div className="relative">
-      {/* Filter Dropdown */}
+      {/* Navbar */}
+      <Navbar onSearch={handleSearch} /> 
+
+      {/* Filter */}
       <div className="flex justify-end bg-gray-200 p-4">
         <select
           name="filter"
@@ -87,7 +99,7 @@ const PokemonGrid = ({ pokemonData }) => {
         ))}
       </div>
 
-      {/* Pagination Controls */}
+      {/* Pagination */}
       <div className="flex justify-center mt-4">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
