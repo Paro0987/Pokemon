@@ -12,7 +12,7 @@ const PokemonGrid = ({ pokemonData }) => {
       (ele.description && ele.description.toLowerCase().includes(query.toLowerCase()))
     );
     setFilteredProducts(filtered);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleFilteredProducts = (e) => {
@@ -21,7 +21,7 @@ const PokemonGrid = ({ pokemonData }) => {
       ? pokemonData.filter((ele) => ele.type.includes(filterValue))
       : pokemonData;
     setFilteredProducts(products);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const paginateData = (data) => {
@@ -48,17 +48,17 @@ const PokemonGrid = ({ pokemonData }) => {
   }, [pokemonData]);
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen bg-gradient-to-b from-gray-100 via-white to-gray-200">
       {/* Navbar */}
-      <Navbar onSearch={handleSearch} /> 
+      <Navbar onSearch={handleSearch} />
 
-      {/* Filter */}
-      <div className="flex justify-end bg-gray-200 p-4">
+      {/* Filter Section */}
+      <div className="flex justify-end bg-gray-50 py-4 px-6 shadow-md">
         <select
           name="filter"
           id="filter"
           onChange={handleFilteredProducts}
-          className="p-2 border rounded-md"
+          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600 bg-white"
         >
           <option value="">Filter by Type</option>
           <option value="grass">Grass</option>
@@ -70,25 +70,27 @@ const PokemonGrid = ({ pokemonData }) => {
       </div>
 
       {/* Pokemon Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-8">
         {paginateData(currentData).map((ele) => (
           <div
             key={ele.id}
-            className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow"
           >
             <img
               className="w-full h-48 object-contain mb-4 mx-auto"
               src={ele.sprite}
               alt={ele.name}
             />
-            <h1 className="text-center text-xl font-semibold mb-2">{ele.name}</h1>
+            <h1 className="text-center text-xl font-bold text-gray-800 mb-4">
+              {ele.name}
+            </h1>
             <ul className="list-none pl-0 m-0 space-y-2">
               {ele.type.map((el, index) => (
                 <li
                   key={index}
-                  className="relative pl-6 text-gray-800 text-sm font-medium hover:text-blue-600"
+                  className="relative pl-6 text-gray-600 text-sm font-medium"
                 >
-                  <span className="absolute left-0 top-0 text-2xl text-blue-500 font-bold">
+                  <span className="absolute left-0 top-0 text-2xl text-gray-500 font-bold">
                     •
                   </span>
                   {el}
@@ -100,21 +102,29 @@ const PokemonGrid = ({ pokemonData }) => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center items-center my-8">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-l-md"
+          className={`px-6 py-2 rounded-l-lg ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-700 text-white hover:bg-gray-800"
+          }`}
         >
           Previous
         </button>
-        <span className="px-4 py-2 text-gray-700">
+        <span className="px-6 py-2 bg-white text-gray-700 shadow-sm">
           Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-r-md"
+          className={`px-6 py-2 rounded-r-lg ${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-700 text-white hover:bg-gray-800"
+          }`}
         >
           Next
         </button>

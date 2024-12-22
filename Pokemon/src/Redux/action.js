@@ -21,11 +21,9 @@ export const fetchData = (url) => async (dispatch) => {
   try {
     dispatch(loadingAction());
 
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
+    const response = await axios.get(url);
 
-    dispatch(successAction(data.data));
+    dispatch(successAction(response.data));
   } catch (error) {
     dispatch(errorAction());
   }
