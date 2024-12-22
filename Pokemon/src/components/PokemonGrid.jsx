@@ -6,11 +6,12 @@ const PokemonGrid = ({ pokemonData }) => {
   const [itemsPerPage] = useState(12);
 
   const handleFilteredProducts = (e) => {
-    const products = e.target.value
-      ? pokemonData.filter((ele) => ele.type.includes(e.target.value))
-      : pokemonData;
+    const filterValue = e.target.value;
+    const products = filterValue
+      ? pokemonData.filter((ele) => ele.type.includes(filterValue))
+      : pokemonData; 
     setFilteredProducts(products);
-    setCurrentPage(1);
+    setCurrentPage(1); 
   };
 
   const paginateData = (data) => {
@@ -20,7 +21,7 @@ const PokemonGrid = ({ pokemonData }) => {
   };
 
   const totalPages = Math.ceil(
-    (filteredProducts.length > 0 ? filteredProducts : pokemonData).length / 
+    (filteredProducts.length > 0 ? filteredProducts : pokemonData).length /
       itemsPerPage
   );
 
@@ -30,8 +31,16 @@ const PokemonGrid = ({ pokemonData }) => {
     setCurrentPage(newPage);
   };
 
+  useEffect(() => {
+    console.log(pokemonData); 
+  }, [pokemonData]);
+
+  const currentData =
+    filteredProducts.length > 0 ? filteredProducts : pokemonData;
+
   return (
     <div className="relative">
+      {/* Filter Dropdown */}
       <div className="flex justify-end bg-gray-200 p-4">
         <select
           name="filter"
@@ -48,35 +57,37 @@ const PokemonGrid = ({ pokemonData }) => {
         </select>
       </div>
 
+      {/* Pokemon Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-        {(filteredProducts.length > 0 ? filteredProducts : pokemonData)
-          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-          .map((ele) => (
-            <div
-              key={ele.id}
-              className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-            >
-              <img
-                className="w-full h-48 object-contain mb-4 mx-auto"
-                src={ele.sprite}
-                alt={ele.name}
-              />
-              <h1 className="text-center text-xl font-semibold mb-2">
-                {ele.name}
-              </h1>
-              <ul className="list-none pl-0 m-0 space-y-2">
-  {ele.type.map((el, index) => (
-    <li key={index} className="relative pl-6 text-gray-800 text-sm font-medium hover:text-blue-600">
-      <span className="absolute left-0 top-0 text-2xl text-blue-500 font-bold">•</span>
-      {el}
-    </li>
-  ))}
-</ul>
-
-            </div>
-          ))}
+        {paginateData(currentData).map((ele) => (
+          <div
+            key={ele.id}
+            className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <img
+              className="w-full h-48 object-contain mb-4 mx-auto"
+              src={ele.sprite}
+              alt={ele.name}
+            />
+            <h1 className="text-center text-xl font-semibold mb-2">{ele.name}</h1>
+            <ul className="list-none pl-0 m-0 space-y-2">
+              {ele.type.map((el, index) => (
+                <li
+                  key={index}
+                  className="relative pl-6 text-gray-800 text-sm font-medium hover:text-blue-600"
+                >
+                  <span className="absolute left-0 top-0 text-2xl text-blue-500 font-bold">
+                    •
+                  </span>
+                  {el}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
+      {/* Pagination Controls */}
       <div className="flex justify-center mt-4">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
