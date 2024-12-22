@@ -16,7 +16,7 @@ const Navbar = ({ onSearch }) => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-2xl font-bold">
           <a href="/" className="hover:text-gray-400">
-            Pokemon
+            Pokémon
           </a>
         </div>
 
