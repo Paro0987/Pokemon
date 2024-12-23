@@ -6,7 +6,7 @@ import { fetchData } from "../Redux/action";
 const PokemonCard = () => {
   const pokemon = useSelector((state) => state.pokemon);
   const dispatch = useDispatch();
-  const url = "http://localhost:8080/pokemon";
+  const url = "https://pokemonbackend-2.onrender.com/pokemon";
 
   useEffect(() => {
     dispatch(fetchData(url));
