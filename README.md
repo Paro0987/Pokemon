@@ -33,9 +33,4 @@ A web application to showcase Pokémon details in a visually appealing and user-
 - Node.js (version 14+)
 - npm or yarn package manager
 
-### Steps:
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/pokemon-gallery.git
-   cd pokemon-gallery
